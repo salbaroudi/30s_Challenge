@@ -14,7 +14,7 @@ p {
 }
 
 .grid-container {
-  width: 50%;
+  width: 90%;
   display: inline-block;
   background-color: #999;
   padding: 4px;
@@ -28,21 +28,30 @@ p {
   display:inline-block;
 }
 
-.orange-border {
+.begin-border {
   border-style: groove;
   border-width: 5px;
-  border-radius: 12px 12px 12px 2px;
+  border-radius: 12px 3px 3px 12px;
   padding: 5px 40px 5px 40px;
-  background-color: #FFA500;
-  border-color: #CC9300;
+  background-color: #999999;
+  border-color:#555;
 }
 
-.blue-border {
+.end-border {
   border-style: groove;
   border-width: 5px;
-  border-radius: 12px 3px 3px 3px;
-  background-color: #0000FF;
-  border-color: #0000CC;
+  border-radius: 3px 12px 12px 3px;
+  padding: 5px 40px 5px 40px;
+  background-color: #999999;
+  border-color:#555;
+}
+
+.border {
+  border-style: groove;
+  border-width: 5px;
+  border-radius: 3px 3px 3px 3px;
+  background-color: #999999;
+  border-color:#555;
 }
 
 .button {

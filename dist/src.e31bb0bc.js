@@ -35657,64 +35657,27 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-//but what about the default initialization?
 var Difficulty = function Difficulty(props) {
   var difficulty = props.difficulty,
       clickNovice = props.clickNovice,
       clickIntermediate = props.clickIntermediate,
-      clickExpert = props.clickExpert; //Redundant, but simple. Maybe a better way to code? (todo later (!!!))
+      clickExpert = props.clickExpert; //First set default values
+
+  var cssNovice = "grid-item button";
+  var cssIntermediate = "grid-item button";
+  var cssExpert = "grid-item button";
 
   if (difficulty === "Novice") {
-    return /*#__PURE__*/_react.default.createElement("div", {
-      class: "difficulty"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      class: "grid-item bigger"
-    }, " Difficulty:: "), /*#__PURE__*/_react.default.createElement("button", {
-      onClick: clickNovice,
-      class: "grid-item button clicked"
-    }, " Novice "), /*#__PURE__*/_react.default.createElement("button", {
-      onClick: clickIntermediate,
-      class: "grid-item button"
-    }, " Intermediate "), /*#__PURE__*/_react.default.createElement("button", {
-      onClick: clickExpert,
-      class: "grid-item button"
-    }, " Expert"));
+    cssNovice = "grid-item button clicked";
   }
 
   if (difficulty === "Intermediate") {
-    return /*#__PURE__*/_react.default.createElement("div", {
-      class: "difficulty"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      class: "grid-item bigger"
-    }, " Difficulty:: "), /*#__PURE__*/_react.default.createElement("button", {
-      onClick: clickNovice,
-      class: "grid-item button"
-    }, " Novice "), /*#__PURE__*/_react.default.createElement("button", {
-      onClick: clickIntermediate,
-      class: "grid-item button clicked"
-    }, " Intermediate "), /*#__PURE__*/_react.default.createElement("button", {
-      onClick: clickExpert,
-      class: "grid-item button"
-    }, " Expert"));
+    cssIntermediate = "grid-item button clicked";
   }
 
   if (difficulty === "Expert") {
-    return /*#__PURE__*/_react.default.createElement("div", {
-      class: "difficulty"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      class: "grid-item bigger"
-    }, " Difficulty:: "), /*#__PURE__*/_react.default.createElement("button", {
-      onClick: clickNovice,
-      class: "grid-item button"
-    }, " Novice "), /*#__PURE__*/_react.default.createElement("button", {
-      onClick: clickIntermediate,
-      class: "grid-item button"
-    }, " Intermediate "), /*#__PURE__*/_react.default.createElement("button", {
-      onClick: clickExpert,
-      class: "grid-item button clicked"
-    }, " Expert "));
-  } //else...//when we first start, how do we check a difficulty has been set? How do we warn user?
-
+    cssExpert = "grid-item button clicked";
+  }
 
   return /*#__PURE__*/_react.default.createElement("div", {
     class: "difficulty"
@@ -35722,13 +35685,13 @@ var Difficulty = function Difficulty(props) {
     class: "grid-item bigger"
   }, " Difficulty:: "), /*#__PURE__*/_react.default.createElement("button", {
     onClick: clickNovice,
-    class: "grid-item button"
+    class: cssNovice
   }, " Novice "), /*#__PURE__*/_react.default.createElement("button", {
     onClick: clickIntermediate,
-    class: "grid-item button"
+    class: cssIntermediate
   }, " Intermediate "), /*#__PURE__*/_react.default.createElement("button", {
     onClick: clickExpert,
-    class: "grid-item button"
+    class: cssExpert
   }, " Expert "));
 }; //How does state.settings work...?
 
@@ -35748,7 +35711,54 @@ var mapDistpatch2Props = {
 var _default = (0, _reactRedux.connect)(mapState2Props, mapDistpatch2Props)(Difficulty);
 
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../actions/settings":"actions/settings.js"}],"components/App.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../actions/settings":"actions/settings.js"}],"components/Puzzle.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+//import { connect } from 'react-redux';
+//import { ?,?,? } from "../actions/settings";
+var Puzzle = function Puzzle(props) {
+  //const { ???? } = props;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    class: "grid-container"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    class: "grid-item begin-border"
+  }, "25"), /*#__PURE__*/_react.default.createElement("div", {
+    class: "grid-item border"
+  }, "Square It"), /*#__PURE__*/_react.default.createElement("div", {
+    class: "grid-item border"
+  }, "-25"), /*#__PURE__*/_react.default.createElement("div", {
+    class: "grid-item border"
+  }, "/3"), /*#__PURE__*/_react.default.createElement("div", {
+    class: "grid-item border"
+  }, "+55"), /*#__PURE__*/_react.default.createElement("div", {
+    class: "grid-item border"
+  }, "-75"), /*#__PURE__*/_react.default.createElement("div", {
+    class: "grid-item border"
+  }, "+5"), /*#__PURE__*/_react.default.createElement("div", {
+    class: "grid-item border"
+  }, "+15"), /*#__PURE__*/_react.default.createElement("div", {
+    class: "grid-item end-border"
+  }, "ANS"));
+}; //How does state.settings work...?
+//const mapState2Props = (state) => ({ });
+//const mapDistpatch2Props = ({clickNovice, clickIntermediate, clickExpert});
+//export default connect(mapState2Props, mapDistpatch2Props)(Difficulty);
+
+
+var _default = Puzzle;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"components/App.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35763,6 +35773,8 @@ var _reactRedux = require("react-redux");
 var _Instructions = _interopRequireDefault(require("./Instructions"));
 
 var _Difficulty = _interopRequireDefault(require("./Difficulty"));
+
+var _Puzzle = _interopRequireDefault(require("./Puzzle"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35806,7 +35818,7 @@ var App = /*#__PURE__*/function (_Component) {
   _createClass(App, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, "~ 30 Second Challenge ~"), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement(_Difficulty.default, null), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement(_Instructions.default, null));
+      return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, " 30 Second Challenge "), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement(_Difficulty.default, null), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement(_Puzzle.default, null), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement(_Instructions.default, null));
     }
   }]);
 
@@ -35815,7 +35827,7 @@ var App = /*#__PURE__*/function (_Component) {
 
 var _default = App;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","./Instructions":"components/Instructions.js","./Difficulty":"components/Difficulty.js"}],"../node_modules/@babel/runtime/helpers/esm/defineProperty.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","./Instructions":"components/Instructions.js","./Difficulty":"components/Difficulty.js","./Puzzle":"components/Puzzle.js"}],"../node_modules/@babel/runtime/helpers/esm/defineProperty.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36808,7 +36820,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36435" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33221" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
