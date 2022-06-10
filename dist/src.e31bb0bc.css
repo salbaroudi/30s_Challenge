@@ -1,12 +1,12 @@
 
 @font-face {
   font-family: SearsTower;
-  src: url(assets/Sears_Tower.ttf);
+  src: url(/Sears_Tower.cc5c3bdc.ttf);
 }
 
 @font-face {
   font-family: VeraType;
-  src: url(assets/VeraType.ttf);
+  src: url(/VeraType.907318d2.ttf);
 }
 
 p {
@@ -93,3 +93,6 @@ h1 {
   font-family: SearsTower;
   font-size:50pt;
 }
+
+
+/*# sourceMappingURL=/src.e31bb0bc.css.map */
