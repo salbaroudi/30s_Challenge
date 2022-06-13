@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { clickNovice, clickIntermediate, clickExpert } from "../actions/settings";
+import { clickNovice, clickIntermediate, clickExpert } from "../actions/difficulty";
 
 const Difficulty = props => {
   const { difficulty, clickNovice, clickIntermediate, clickExpert} = props;
@@ -25,6 +25,6 @@ const Difficulty = props => {
 }
 
 //How does state.settings work...?
-const mapState2Props = (state) => ({ difficulty: state.settings.difficulty });
-const mapDistpatch2Props = ({clickNovice, clickIntermediate, clickExpert});
-export default connect(mapState2Props, mapDistpatch2Props)(Difficulty);
+const mapStateToProps = (state) => ({ difficulty: state.difficulty.difficulty }); //bad naming??
+const mapDistpatchToProps = ({clickNovice, clickIntermediate, clickExpert});
+export default connect(mapStateToProps, mapDistpatchToProps)(Difficulty);

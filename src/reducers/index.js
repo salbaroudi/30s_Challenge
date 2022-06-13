@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
-import settingsReducer from "./settings.js";
-import difficultyReducer from "./settings.js";
+import instructionsReducer from "./instructions.js";
+import difficultyReducer from "./difficulty.js";
 
 
 //Will return a composite reducer with the name RootReducer, for ./src/index.js
-export default combineReducers({settings: settingsReducer, difficulty: difficultyReducer});
+export default combineReducers({instructions: instructionsReducer, difficulty: difficultyReducer});

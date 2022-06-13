@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {collapseInstructions, expandInstructions} from "../actions/settings";
+import {collapseInstructions, expandInstructions} from "../actions/instructions";
 
 //but what about the default initialization?
 const Instructions = props => {
@@ -25,6 +25,6 @@ const Instructions = props => {
   );
 }
 //why state.settings...?
-const mapState2Props = (state) => ({ instructionsExpanded: state.settings.instructionsExpanded });
-const mapDistpatch2Props = ({expandInstructions, collapseInstructions});
-export default connect(mapState2Props, mapDistpatch2Props)(Instructions);
+const mapStateToProps = (state) => ({ instructionsExpanded: state.instructions.instructionsExpanded });
+const mapDistpatchToProps = ({expandInstructions, collapseInstructions});
+export default connect(mapStateToProps, mapDistpatchToProps)(Instructions);
