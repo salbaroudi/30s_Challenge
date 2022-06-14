@@ -11,7 +11,7 @@ const DEFAULT_SETTINGS = {
 const puzzleReducer = (state = DEFAULT_SETTINGS, action) => {
   switch(action.type) {
     case CALC_PUZZLE: //was fired by action dispatch.
-        return { ...state, startNumber:action.startNumber,answer:action.startNumber,opsArray:action.opsArray};
+        return { ...state, startNumber:action.startNumber,answer:action.answer,opsArray:action.opsArray};
     default:
       return state;
   }
