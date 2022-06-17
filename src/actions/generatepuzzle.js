@@ -1,14 +1,14 @@
 
-
 const plus = function(curTotal,lim) {
   return (curTotal+randNum(lim));
 }
+
 
 const times = function(curTotal,lim) {
   return (curTotal*randNum(lim));
 }
 
-const plusprecent = function(curTotal,lim) {
+const pluspercent = function(curTotal,lim) {
   //not correct. but leave it for now.
   return (curTotal+randNum(lim));
 }
@@ -17,7 +17,7 @@ const square = function(curTotal,lim) {
   return curTotal**2;
 }
 
-const triple = function(curTotal,lim) {
+const cube = function(curTotal,lim) {
   return curTotal**3;
 }
 
@@ -34,7 +34,6 @@ const abfrac = function(curTotal,lim) {
   return (curTotal/randNum(10));
 }
 
-
 const minuspercent = function(curTotal,lim) {
   //Not implemented right, fix up later
   return (curTotal-randNum(10));
@@ -49,7 +48,7 @@ const cuberoot = function(curTotal,lim) {
 }
 
 //Taken from https://www.freecodecamp.org/news/js-basics-how-to-reverse-a-number-9aefc20afa8d/
-const reverseDigits = function(curTotal) {
+const reversedigits = function(curTotal,limit) {
   return (
     parseFloat(
       curTotal
@@ -61,10 +60,22 @@ const reverseDigits = function(curTotal) {
   )
 }
 
+const nameMap = {"+":plus,
+  "*":times,
+  "+%":pluspercent,
+  "Square It":square,
+  "Cube It":cube,
+  "-":minus,
+  "/":divide,
+  "* a/b":abfrac,
+  "-%":minuspercent,
+  "Square Root":squareroot,
+  "Cube Root":cuberoot,
+  "Rev. Digits":reversedigits
+};
+
+
 //These are ordered from most frequent to least frequent
-const growthOps = [plus,times, pluspercent, square, cube];
-const reductionOps = [minus, divide, abfrac, minuspercent, squareroot, cuberoot];
-const wildcardOps = [reverseDigits];
 
 const noviceSettings = {
   startLim:10,
@@ -76,37 +87,45 @@ const randNum = function(limit = 10) {
   return Math.round(Math.random()*limit);
 }
 
-const opTypeDist = function() {
-  const drawNumber = randNum(100); let opArrReturned;
-  if (drawNumber <= 49) { opArrReturned = growthOps;}
-  else if (drawNumber <= 98) { opArrReturned = reductionOps; }
-  else if (drawNumber <= 100) { opArrReturned = wildcardOps;}
-  return opArrReturned;
-};
+//const growthOps = [plus,times, pluspercent, square, cube];
+//const reductionOps = [minus, divide, abfrac, minuspercent, squareroot, cuberoot];
+//const wildcardOps = [reversedigits];
 
+//45,28,15,8,4 from fcGeo(), numbers nudged a bit.
 const growOpsSelect = function() {
   const drawNumber = randNum(100);
   let opReturned;
-  if (drawNumber <= 54) { opReturned = growthOps[0]; }
-  else if (drawNumber <= 79) { opReturned = growthOps[1]; }
-  else if (drawNumber <= 91.5) { opReturned = growthOps[2]; }
-  else if (drawNumber <= 97.75) { opReturned = growthOps[3]; }
-  else if (drawNumber <= 100) { opReturned = growthOps[4];}
+  if (drawNumber <= 45) { opReturned = "+"; }
+  else if (drawNumber <= 73) { opReturned = "*"; }
+  else if (drawNumber <= 88) { opReturned = "+%"; }
+  else if (drawNumber <= 96) { opReturned = "Square It"; }
+  else if (drawNumber <= 100) { opReturned = "Cube It";}
   return opReturned;
 };
 
+//46,25,14,8,5,2 from fcGeo(), numbers nudged a bit.
 const redOpsSelect = function() {
   const drawNumber = randNum(100);
   let opReturned;
-  if (drawNumber <= 51) { opReturned = reductionOps[0]; }
-  else if (drawNumber <= 76) { opReturned = reducitonOps[1]; }
-  else if (drawNumber <= 88.5) { opReturned = reductionOps[2]; }
-  else if (drawNumber <= 95.75) { opReturned = reductionOps[3]; }
-  else if (drawNumber <= 98.875) { opReturned = reductionOps[4];}
-  else if (drawNumber <= 100) { opReturned = reductionOps[5];}
+  if (drawNumber <= 46) { opReturned = "-"; }
+  else if (drawNumber <= 71) { opReturned = "/"; }
+  else if (drawNumber <= 85) { opReturned = "* a/b"; }
+  else if (drawNumber <= 93) { opReturned = "-%"; }
+  else if (drawNumber <= 98) { opReturned = "Square Root";}
+  else if (drawNumber <= 100) { opReturned = "Cube Root";}
   return opReturned;
 };
 
+const wildOpsSelect = () => {return "Rev. Digits"};
+
+const opTypeSelect = function() {
+  const drawNumber = randNum(100);
+  let opRet;
+  if (drawNumber <= 49) { opRet = growOpsSelect();}
+  else if (drawNumber <= 98) { opRet = redOpsSelect(); }
+  else if (drawNumber <= 100) { opRet = wildOpsSelect();}
+  return opRet;
+};
 
 //This is taken from Ihor Sakailiuk at the following link:
 //https://stackoverflow.com/questions/40200089/number-prime-test-in-javascript
@@ -122,41 +141,49 @@ const randNP = function(limit = 10) {
   while (isPrime(candidateNum)) {
     candidateNum =  randNum(limit);
   }
+  return candidateNum;
 };
+
+// This function takes our current running total, and a limit,
+// and tries to find something that will work.
+// our result must be a whole number > 1 by the end.
+const opSelectChecker = function(op,rt) {
+  const limit = 20; //just for now
+  //note: abfrac and reverse digits don't take two arguements - they are dummied for now.
+  for (let i = 2; i < limit; i++) {
+    let result = op(rt,limit);
+    if ((result % 1 == 0)&&(result > 0)) { return {num:i,result:result};}
+  }
+  return [-1,-1];
+}
+
+const genStepString = function(opStr, num) {
+  return (opStr + num); //string concat.
+}
 
 const calcNovNums = function() {
-  const startNumber = randNP();
-  const runningTotal = startNumber;
-  let opArr = ["G","R","G","R","G","R","G"];
-  while (opArr.length > 0) {
-    if (opArr[0] == "G") {
-      growOpsSelect()
+  const startNumber = randNP(500);
+  let runningTotal = startNumber;
+  const opsArray = [];
+  let currOps = "";
+  while (opsArray.length < 4) {
+    currOps = opTypeSelect();
+    let values = opSelectChecker(nameMap[currOps],runningTotal);
+    if (values.result > 0) {
+      opsArray.push(genStepString(currOps, values.num));
+      runningTotal = values.result;
     }
-    else if (opArr[0] == "R") {
-
-    }
-
-
-    opArr.unshift(); //discard the head.
   }
-
-
-
-  //Need an alternating sequence generator.
-
-
+  return opsArray;
 };
 
+//PMF function was used to calculate our random bounds, in selecting
+//operations. It had the right profile.
 /*
-const fCNegPow = function(lim,pow) {
+const fCGeometric = function(lim) {
+  let p = 0.45
   for (let i = 1; i <= lim; i++) {
-    console.log("i = " + i + ", f(i) = " + (1/(pow*(i**pow)*)));
-  }
-};
-
-const fCNegSlope = function(lim,slope) {
-  for (let i = 1; i <= lim; i++) {
-    console.log("i = " + i + ", f(i) = " + (1/(slope*i)));
+    console.log("i = " + i + ", f(i) = " + (p*((1-p)**(i-1))));
   }
 };
 */
