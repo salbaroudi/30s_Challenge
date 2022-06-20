@@ -1,13 +1,22 @@
-import {CALC_PUZZLE} from "./types.js";
+import {CALC_PUZZLE, SOLVE_CLICK} from "./types.js";
 
-export const calcPuzzle = () => {
+
+//Use this to test the UI statically.
+export const calcPuzzleConst = () => {
   //Here we would do the work to calculate our numbers,
   //Importing sieve algorithms from a separate file.
-  const startNumber = Math.round(Math.random()*100);
-  const opsArray = (new Array(7).fill(0)).map(value => Math.round(Math.random()*10));
-  const answer = startNumber + opsArray.reduce((a, b) => a + b, 0);
-  
-  const sOpsArray = opsArray.map(value => "+" + value);
+  const startNumber = 25;
+  const sOpsArray = ["+15","/8","x10","+25","Rev.Digits","+3","x(1/3)","+5"]
+  const answer = 25;
 
+  //Action being dispatched here.
   return {type:CALC_PUZZLE, startNumber:startNumber, answer:answer, opsArray:sOpsArray};
+}
+
+export const calcPuzzle = () => {
+  return 0;
+}
+
+export const solveClicked = () => {
+  return {type:SOLVE_CLICK, solveClick:true};
 }

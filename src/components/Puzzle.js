@@ -1,24 +1,37 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { calcPuzzle } from "../actions/puzzle";
+import { calcPuzzleConst, calcPuzzle, solveClicked } from "../actions/puzzle";
 
 
 class Puzzle extends Component {
 
   clickStart = () => {
-    this.props.calcPuzzle();
+    if (!this.props.difficulty) {
+      alert("Please select a difficulty setting, before you begin.");
+    }
+    else {
+      this.props.calcPuzzleConst();
+    }
   }
 
   clickReset = () => {
     this.clickStart();
   }
 
-  clickSolution = () => {
-      console.log("Functionality not programmed in yet...");
+  clickSolve = () => {
+      this.props.solveClicked();
   }
 
   render() {
     const cssString = "grid-item button";
+    let ansCss = "grid-item end-border"
+    let ansTxt = "   ";
+    if (this.props.solveClick) {
+      ansCss = "grid-item end-border eb-fail";
+      ansTxt = this.props.answer;
+    }
+
+    //write the solveClicked Logic here, no need for nested ternary's
 
     return (
       <div>
@@ -33,7 +46,8 @@ class Puzzle extends Component {
             <div class="grid-item border">{this.props.opsArray[4]}</div>
             <div class="grid-item border">{this.props.opsArray[5]}</div>
             <div class="grid-item border">{this.props.opsArray[6]}</div>
-            <div class="grid-item end-border">{this.props.answer}</div>
+            <div class="grid-item border">{this.props.opsArray[7]}</div>
+            <div class={ansCss}>{ansTxt}</div>
           </div>
         ) : (<div></div>)
       }
@@ -48,12 +62,20 @@ class Puzzle extends Component {
   }
 }
 
-
+/*
 const mapStateToProps = state => {
-  const { startNumber, answer, opsArray } = state.puzzle;
+  const { startNumber, answer, opsArray, difficulty } = state.puzzle;
   return { startNumber, answer, opsArray };
 }
-const mapDispToProps = ({calcPuzzle});
+*/
+const mapStateToProps = (state) =>
+({startNumber:state.puzzle.startNumber,
+  answer:state.puzzle.answer,
+  opsArray: state.puzzle.opsArray,
+  solveClick: state.puzzle.solveClick,
+  difficulty: state.difficulty.difficulty //little bit ugly, but it works.
+});
+const mapDispToProps = ({calcPuzzleConst, calcPuzzle, solveClicked});
 
 const componentConnector = connect(mapStateToProps, mapDispToProps);
 export default componentConnector(Puzzle);

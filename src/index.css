@@ -21,8 +21,8 @@ p {
 }
 
 .grid-item {
-  padding: 5px 10px 5px 10px;
-  font-size: 32px;
+  padding: 5px 7px 5px 7px;
+  font-size: 30px;
   font-family:VeraType;
   text-align: center;
   display:inline-block;
@@ -32,21 +32,30 @@ p {
   border-style: groove;
   border-width: 5px;
   border-radius: 12px 3px 3px 12px;
-  padding: 5px 40px 5px 40px;
+  padding: 5px 30px 5px 30px;
   background-color: #999999;
   border-color:#555;
-  font-size:36pt;
+  font-size:34pt;
 }
 
 .end-border {
   border-style: groove;
   border-width: 5px;
   border-radius: 3px 12px 12px 3px;
-  padding: 5px 40px 5px 40px;
+  padding: 5px 30px 5px 30px;
   background-color: #999999;
   border-color:#555;
-  font-size:32pt;
+  font-size:34pt;
 }
+
+.eb-fail {
+  background-color: #FF0000;
+}
+
+.eb-success {
+  background-color: #00FF00;
+}
+
 
 .border {
   border-style: groove;
