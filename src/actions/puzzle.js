@@ -1,5 +1,5 @@
 import {CALC_PUZZLE, SOLVE_CLICK} from "./types.js";
-
+import * as gp from "./generatepuzzle.js";
 
 //Use this to test the UI statically.
 export const calcPuzzleConst = () => {
@@ -10,13 +10,22 @@ export const calcPuzzleConst = () => {
   const answer = 25;
 
   //Action being dispatched here.
-  return {type:CALC_PUZZLE, startNumber:startNumber, answer:answer, opsArray:sOpsArray};
+  return {type:CALC_PUZZLE, startNumber:startNumber, answer:answer, opsArray:sOpsArray, solveClick:"Not Pressed"};
 }
 
-export const calcPuzzle = () => {
-  return 0;
+export const calcPuzzle = (diff) => {
+  const { startNumber, answer, opsArray } = gp.calculatePuzzle(diff);
+  return {type:CALC_PUZZLE, startNumber:startNumber, answer:answer, opsArray:opsArray,solveClick:"Not Pressed"};
 }
 
-export const solveClicked = () => {
-  return {type:SOLVE_CLICK, solveClick:true};
+export const success = () => {
+  return {type:SOLVE_CLICK, solveClick:"success"};
+}
+
+export const failure = () => {
+  return {type:SOLVE_CLICK, solveClick:"failure"};
+}
+
+export const revealAnswer = () => {
+  return {type:SOLVE_CLICK, solveClick:"revealAnswer"};
 }

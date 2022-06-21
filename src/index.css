@@ -72,6 +72,23 @@ p {
   border-radius: 5px;
 }
 
+.inputbox {
+  background-color:#999999;
+  border-width:0px;
+  width:100px;
+  font-family: VeraType;
+  font-size:34pt;
+}
+
+.inputred {
+    background-color:#FF0000;
+}
+
+.inputgreen {
+    background-color:#00FF00;
+}
+
+
 .timer {
   margin:auto;
   text-align:center;
