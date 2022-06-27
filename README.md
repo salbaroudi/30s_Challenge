@@ -8,9 +8,11 @@ It generates puzzles that are inspired by the Daily Mail's [30 Seccond Challenge
 
 ## Usage:
 
-Users select a *difficulty level*, and a *timespan* (30s - or 45/60s with handicap), to begin the game.
+Users select a *difficulty level* to begin the game.
 
-The user must perform a series of calculations in a given time-frame, and arrive at the correct final answer.
+The user must mentally perform a series of calculations in a given time-frame, and arrive at the correct final answer.
+
+Once done, the user types in the answer and the app verifies it (Success / Fail).
 
 ## Design and Structure:
 
@@ -18,7 +20,24 @@ The user must perform a series of calculations in a given time-frame, and arrive
 
 **App Structure:**
 
-```
-//place Tags here
+Three main sub-components, as follows:
 
 ```
+render() {
+  return (
+  <div>
+    <h1> 30 Second Challenge </h1>
+    <br />
+    <Difficulty />
+    <br />
+    <br />
+    <Puzzle />
+    <br />
+    <br />
+    <Instructions />
+  </div>
+```
+
+## Demonstration:
+
+This application is hosted on a Heroku server, at the following [link](http://.com).

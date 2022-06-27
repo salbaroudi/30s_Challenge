@@ -1,11 +1,9 @@
-
-//it is better to just pass two args back.
-//quite a few functions have their own special constraints.
-//let's just keep it all in the operation functions - easier that way.
-export const noviceSettings = {
-  startUB:100,
-  startLB:20,
-  gLimit:30,
+const noviceSettings = {
+  startUB:50,
+  startLB:15,
+  addLimit:50,
+  abLimit:10,
+  multLimit:9,
   pFiveToggle:false,
   percentBound:10,
   sqLimit:30,
@@ -13,31 +11,35 @@ export const noviceSettings = {
   divLimit:10,
   sqRootLBound:4,
   cuRootLBound:9,
-  uLMultBound:30,
+  uLMultBound:10,
   revDigitLim:1000,
   rLims:[46,71,85,93,98,100]
 };
 
 export const intermediateSettings = {
-  startUB:200,
-  startLB:40,
-  gLimit:60,
-  pFiveToggle:true,
+  startUB:150,
+  startLB:50,
+  addLimit:100,
+  abLimit:20,
+  multLimit:15,
+  pFiveToggle:false,
   percentBound:20,
   sqLimit:40,
   cubeLimit:20,
   divLimit:40,
   sqRootLBound:4,
   cuRootLBound:9,
-  uLMultBound:40,
+  uLMultBound:13,
   revDigitLim:1000,
   rLims:[36,61,75,83,88,100]
 };
 
 export const expertSettings = {
   startUB:300,
-  startLB:60,
-  gLimit:200,
+  startLB:150,
+  addLimit:200,
+  abLimit:30,
+  multLimit:20,
   pFiveToggle:true,
   percentBound:30,
   sqLimit:35,
@@ -45,20 +47,27 @@ export const expertSettings = {
   divLimit:50,
   sqRootLBound:4,
   cuRootLBound:9,
-  uLMultBound:50,
+  uLMultBound:18,
   revDigitLim:10000,
   rLims:[36,61,71,81,92,100]
 };
 
-var set = {}; //will point to one our difficulty parameter sets!
+//will point to one our difficulty parameter sets.
+var set = {};
+
+/*
+  Our Operation Functions
+  --------------------------------
+*/
 
 export const plus = function(curTotal) {
-  const addend = randNum(set.gLimit);
+  const addend = randNum(set.addLimit);
   return {num:addend,result:curTotal+addend};
 }
 
 export const times = function(curTotal) {
-    const multiplicand = randNum((set.gLimit/2)); //easily blows up!
+    const multiplicand = randNum(set.multLimit); //easily blows up!
+    //console.log("our multiplicand: " + multiplicand + " our total=" + (curTotal*multiplicand));
     return {num:multiplicand,result:curTotal*multiplicand};
 }
 
@@ -67,7 +76,7 @@ export const pluspercent = function(curTotal) {
   if (set.pFiveToggle) {
     percent += Math.round(Math.random())*5;
   }
-  return {num:percent,result:(curTotal + (curTotal*(percent/set.percentBound)))};
+  return {num:percent,result:(curTotal + (curTotal*(percent/(set.percentBound*10))))};
 }
 
 export const square = function(curTotal) {
@@ -87,7 +96,7 @@ export const cube = function(curTotal) {
 }
 
 export const minus = function(curTotal) {
-  const subtractand = randNum(set.gLimit)
+  const subtractand = randNum(set.addLimit)
   return {num:subtractand,result:curTotal-subtractand};
 }
 
@@ -103,7 +112,7 @@ export const divide = function(curTotal) {
 export const abfrac = function(curTotal) {
   var denominator = 0; var numerator = 0;
   while((denominator == numerator) || (denominator == 1)) {
-    denominator = randNum(Math.round(set.gLimit))
+    denominator = randNum(Math.round(set.abLimit))
     numerator = randNum(denominator-1);
   }
   return {num:numerator,denum:denominator,result:curTotal*(numerator/denominator)};
@@ -113,7 +122,7 @@ export const abfrac = function(curTotal) {
 export const bafrac = function(curTotal) {
   var denominator = 0; var numerator = 0;
   while(denominator == numerator || (denominator == 1)) {
-    numerator = randNum(Math.round(set.gLimit));
+    numerator = randNum(Math.round(set.abLimit));
     denominator = randNum(numerator-1);
   }
   return {num:numerator,denum:denominator,result:curTotal*(numerator/denominator)};
@@ -152,6 +161,11 @@ export const reversedigits = function(curTotal) {
   return {num:-1,result:-1};
 }
 
+/*
+------------------------------
+*/
+
+
 export const nameMap = {"+":plus,
   "x":times,
   "+%":pluspercent,
@@ -172,11 +186,6 @@ export const randNum = function(limit = 10) { //can't be zero!
   return Math.ceil(Math.random()*limit);
 }
 
-//const growthOps = [plus,times, pluspercent, square, cube];
-//const reductionOps = [minus, divide, abfrac, minuspercent, squareroot, cuberoot];
-//const wildcardOps = [reversedigits];
-
-//45,28,15,8,4 from fcGeo(), numbers nudged a bit.
 export const growOpsSelect = function() {
   const drawNumber = randNum(100);
   let opReturned;
@@ -189,8 +198,6 @@ export const growOpsSelect = function() {
   return opReturned;
 };
 
-
-//46,25,14,8,5,2 from fcGeo(), numbers nudged a bit.
 export const redOpsSelect = function() {
   const drawNumber = randNum(100);
   let opReturned;
@@ -222,7 +229,7 @@ export const isPrime = num => {
     return num > 1;
 }
 
-//"RandNP" : *Semi*-Random Non Prime. Not truely random as primes are taken out.
+//"RandNP" : Random Non Prime
 export const randNP = function(limit = 10) {
   let candidateNum =  randNum(limit);
   while (isPrime(candidateNum)) {
@@ -231,8 +238,8 @@ export const randNP = function(limit = 10) {
   return candidateNum;
 };
 
-//PMF function was used to calculate our random bounds, in selecting
-//operations. It had the right profile.
+/*PMF function was used to help calculate our random bounds, in selecting
+operations. It had the right profile. */
 export const fCGeometric = function(lim) {
   let p = 0.45
   for (let i = 1; i <= lim; i++) {
@@ -240,9 +247,11 @@ export const fCGeometric = function(lim) {
   }
 };
 
-// This function takes our current running total, and a limit,
-// and tries to find something that will work.
-// our result must be a whole number > 1 by the end.
+/*
+This function takes our current running total and a limit,
+and tries to find something that will work.
+our result must be a whole number > 1 by the end.
+*/
 export const opSelectChecker = function(op,rt) {
   //loop limit - try a certain number of times.
   for (let i = 0; i < 10; i++) {
@@ -254,6 +263,9 @@ export const opSelectChecker = function(op,rt) {
   return {num:-1,result:-1,denum:-1}; //failure.
 }
 
+/*
+  This could be cleaned up a bit, but works fine.
+*/
 export const genStepString = function(opname,values) {
   let {num, denum} = values;
   let retString = "";
@@ -276,6 +288,12 @@ export const genStepString = function(opname,values) {
   return retString;
 }
 
+/*
+This is a global bound, to stop our chain of calculations from exploding.
+From experiments, I saw answers as large as 10e25. So this is essential.
+In practice, once the runningTotal hits the ceiling, division and minus operations
+will get selected more frequently.
+*/
 export const boundConstraints = function(startNumber,curTotal) {
   const uLB = set.uLMultBound;
   if ((curTotal < 6)||(startNumber*uLB < curTotal)||((startNumber/uLB) > curTotal)){
@@ -284,6 +302,9 @@ export const boundConstraints = function(startNumber,curTotal) {
   return true;
 }
 
+/*
+Does what it says on the box.
+*/
 export const getStartNumber = function(uB, lB) {
   var rN = randNP(uB);
   while (rN < lB) {
@@ -292,10 +313,11 @@ export const getStartNumber = function(uB, lB) {
   return rN;
 }
 
+// Our main function for generating a puzzle.
 export const calculatePuzzle = function(diff) {
   if (diff == "Novice") { set = noviceSettings; }
-  else if (diff = "Intermediate") { set = intermediateSettings;}
-  else if (diff = "Expert") { set = expertSettings; }
+  else if (diff == "Intermediate") { set = intermediateSettings;}
+  else if (diff == "Expert") { set = expertSettings; }
   const startNumber = getStartNumber(set.startUB,set.startLB);
   var runningTotal = startNumber;
   var currOps; var values;
@@ -312,23 +334,20 @@ export const calculatePuzzle = function(diff) {
   return {startNumber:startNumber,rTArray:rTArray,answer:runningTotal,opsArray:opsArray};
 };
 
-//call calcNovNums() many times, to see how many blowups occur via console inspection.
+/*
+~~ Console Testing Functions: For attunement of settings and debugging ~~
+*/
+
 export const calcNumsTest = function(diff = "Novice") {
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 10; i++) {
     var retObj = calculatePuzzle(diff);
     console.log("i= " + i + ", sN= " + retObj.startNumber + ", rT= " + retObj.answer);
     console.log(retObj);
   }
 }
 
-export const calcNovTest = function() {
-  calcNumsTest("Novice");
-}
+export const calcNovTest = function() { calcNumsTest("Novice");}
 
-export const calcIntTest = function() {
-  calcNumsTest("Intermediate");
-}
+export const calcIntTest = function() { calcNumsTest("Intermediate");}
 
-export const calcExpTest = function() {
-  calcNumsTest("Expert");
-}
+export const calcExpTest = function() { calcNumsTest("Expert");}

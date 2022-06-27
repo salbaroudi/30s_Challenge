@@ -8,6 +8,7 @@
     "build": "parcel build src/index.html",
     "start": "npm run build && live-server dist"
   },
+  "engines": {"node":"18.1.0"},
   "keywords": [],
   "author": "Sean al-Baroudi",
   "license": "MIT",
