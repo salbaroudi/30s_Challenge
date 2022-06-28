@@ -42,4 +42,8 @@ render() {
 
 ## Demonstration:
 
-This application is hosted on a Heroku server, at the following [link](http://.com). Give it a try!
+This application is hosted on a Heroku server, at the following link: [
+https://git.heroku.com/thirty-second-challenge.git](
+https://git.heroku.com/thirty-second-challenge.git).
+
+Give it a try!
