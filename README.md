@@ -43,7 +43,7 @@ render() {
 ## Demonstration:
 
 This application is hosted on a Heroku server, at the following link: [
-https://git.heroku.com/thirty-second-challenge.git](
-https://git.heroku.com/thirty-second-challenge.git).
+https://thirty-second-challenge.herokuapp.com/](
+https://thirty-second-challenge.herokuapp.com/).
 
 Give it a try!
