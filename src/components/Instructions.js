@@ -19,13 +19,15 @@ const Instructions = props => {
         </div>
         <div class="instructions">
         When the game starts, the answer box (right hand side) will be in focus. Simply type your answer into the box.
+
         A player can press the SUBMIT ANSWER button, or ENTER to submit. Green indicates success and red indicates an
         incorrect answer.
         </div>
-        <div class="instructions">
-        You have 30 seconds to enter the final answer. After this time it will be automatically revealed.
-        The user can click REVEAL ANSWER at any time. Good Luck.
+        <br />
+        <div class="instructions"><b>(!!) Note::</b> "Rev. Digits" = Reverse Digits. For example, if our running total is "521",
+        the result of this operation would be "125".
         </div>
+
       </div>
     );
   }

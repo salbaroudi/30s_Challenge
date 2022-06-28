@@ -28,6 +28,10 @@ class Puzzle extends Component {
       this.props.revealAnswer();
   }
 
+  handleKeyPress = event => {
+    if (event.key === "Enter") { this.submitAnswer();}
+  }
+
   //If puzzle loaded, we must always focus on the input field.
   //Saves user from having to click with mouse twice on hard skill levels (every second counts).
   componentDidUpdate() {
@@ -76,7 +80,7 @@ class Puzzle extends Component {
             <div class="grid-item border">{this.props.opsArray[5]}</div>
             <div class="grid-item border">{this.props.opsArray[6]}</div>
             <div class="grid-item border">{this.props.opsArray[7]}</div>
-            <div class={ansCss}><input id="fid" class={inputCss} type="text" /></div>
+            <div class={ansCss}><input id="fid" class={inputCss} type="text" onKeyPress={this.handleKeyPress} /></div>
           </div>
         ) : (<div></div>)
       }

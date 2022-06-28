@@ -10,7 +10,7 @@ It generates puzzles that are inspired by the Daily Mail's [30 Seccond Challenge
 
 Users select a *difficulty level* to begin the game.
 
-The user must mentally perform a series of calculations in a given time-frame, and arrive at the correct final answer.
+The user must mentally perform a series of calculations, and arrive at the correct final answer.
 
 Once done, the user types in the answer and the app verifies it (Success / Fail).
 
@@ -18,9 +18,11 @@ Once done, the user types in the answer and the app verifies it (Success / Fail)
 
 - Usage of React Components, Redux Global Store - with unidirectional dataflow (Actions and Reducers).
 
-**App Structure:**
+- Puzzle Generator connected to front end via ./action/puzzle.js. This outputs a state object that is emitted,
+and handled by our puzzle Reducer. When React re-renders() the frame, we read the generated puzzle information
+from our Redux global store, and load the puzzle into the front end.
 
-Three main sub-components, as follows:
+- Three main sub-components, as follows:
 
 ```
 render() {
@@ -40,4 +42,4 @@ render() {
 
 ## Demonstration:
 
-This application is hosted on a Heroku server, at the following [link](http://.com).
+This application is hosted on a Heroku server, at the following [link](http://.com). Give it a try!
